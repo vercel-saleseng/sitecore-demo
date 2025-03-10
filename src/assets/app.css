@@ -1,10 +1,9 @@
-@tailwind base;
+@import 'tailwindcss/preflight';
 /*
   ---break---
 */
 @custom-variant dark (&:is(.dark *));
 @plugin "tailwindcss-animate";
-@tailwind components;
 @tailwind utilities;
 
 a[target='_blank']:after {
