@@ -3,3 +3,4 @@ src/lib/redirects
 src/lib/revalidate
 src/pages/api/redirects
 src/pages/api/revalidate
+src/lib/middleware/plugins/redirects.ts
