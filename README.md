@@ -15,3 +15,9 @@ The purpose of this application is to showcase how a default Sitecore JSS + Next
 [How to Optimize Next.js + Sitecore JSS Applications](https://vercel.com/guides/how-to-optimize-next.js-sitecore-jss)
 
 The guide covers various optimization techniques and best practices for building high-performance Sitecore JSS applications with Next.js.
+
+### v0 Resources and Blocks
+
+- [Sitecore Redirects + Edge Config Integration](https://v0.dev/chat/sitecore-jss-edge-config-redirect-aC6kB93146K?b=b_xBBsagO1xFL)
+- [Sitecore Experience Edge XM API - Webhook Manager](https://v0.dev/chat/experience-edge-admin-webhook-ui-qgKtONdreI0?b=b_l4UFKbVdgCf)
+- [Sitecore On-Demand Revalidation Integration Example](https://v0.dev/chat/sitecore-jss-revalidate-handler-Y3wS4rkFo7Y?b=b_mDsws6vLDvR)
