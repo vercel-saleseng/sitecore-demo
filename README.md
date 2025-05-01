@@ -1,4 +1,4 @@
-# Step-by-Step Optimization for Next.js and Sitecore JSS
+# Next.js and Sitecore JSS
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel-partner-solutions-labs%2Fsugcon-europe-2025&env=FETCH_WITH,GRAPH_QL_ENDPOINT,SITECORE_API_HOST,SITECORE_EDGE_CONTEXT_ID,SITECORE_SITE_NAME&project-name=sugcon-europe-demo&repository-name=sugcon-europe-demo)
 
