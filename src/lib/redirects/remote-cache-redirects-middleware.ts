@@ -85,17 +85,16 @@ export class RemoteCacheRedirectsMiddleware extends RedirectsMiddleware {
 
     return modifyRedirects.length
       ? modifyRedirects.find((redirect: RedirectResult) => {
-          // process static URL (non-regex) rules
           if (isRegexOrUrl(redirect.pattern) === 'url') {
             const urlArray = redirect.pattern.endsWith('/')
               ? redirect.pattern.slice(0, -1).split('?')
               : redirect.pattern.split('?');
             const patternQS = urlArray[1];
             let patternPath = urlArray[0];
-            // nextjs routes are case-sensitive, but locales should be compared case-insensitively
+
             const patternParts = patternPath.split('/');
             const maybeLocale = patternParts[1].toLowerCase();
-            // case insensitive lookup of locales
+            
             if (new RegExp(this.siteLocales.join('|'), 'i').test(maybeLocale)) {
               patternPath = patternPath.replace(`/${patternParts[1]}`, `/${maybeLocale}`);
             }
@@ -109,29 +108,23 @@ export class RemoteCacheRedirectsMiddleware extends RedirectsMiddleware {
             );
           }
 
-          // process regex rules
-
-          // Modify the redirect pattern to ignore the language prefix in the path
-          // And escapes non-special "?" characters in a string or regex.
           redirect.pattern = escapeNonSpecialQuestionMarks(
             redirect.pattern.replace(new RegExp(`^[^]?/${language}/`, 'gi'), '')
           );
 
-          // Prepare the redirect pattern as a regular expression, making it more flexible for matching URLs
           redirect.pattern = `/^\/${redirect.pattern
             .replace(/^\/|\/$/g, '') // Removes leading and trailing slashes
             .replace(/^\^\/|\/\$$/g, '') // Removes unnecessary start (^) and end ($) anchors
             .replace(/^\^|\$$/g, '') // Further cleans up anchors
             .replace(/\$\/gi$/g, '')}[\/]?$/i`; // Ensures the pattern allows an optional trailing slash
 
-          // Redirect pattern matches the full incoming URL with query string present
           matchedQueryString = [
             new RegExp(redirect.pattern).test(`${localePath}${incomingQS}`),
             new RegExp(redirect.pattern).test(`${normalizedPath}${incomingQS}`),
           ].some(Boolean)
             ? incomingQS
             : undefined;
-          // Save the matched query string (if found) into the redirect object
+
           redirect.matchedQueryString = matchedQueryString || '';
           return (
             !!(
@@ -149,20 +142,11 @@ export class RemoteCacheRedirectsMiddleware extends RedirectsMiddleware {
       return url;
     }
 
-    /**
-     * Prepare special parameters for exclusion.
-     */
     const splittedPathname = url.pathname
       .split('/')
       .filter((route: string) => route)
       .map((route) => `path=${route}`);
 
-    /**
-     * Remove special parameters(Next.JS)
-     * Example: /about/contact/us
-     * When a user clicks on this link, Next.js should generate a link for the middleware, formatted like this:
-     * http://host/about/contact/us?path=about&path=contact&path=us
-     */
     const newQueryString = url.search
       .replace(/^\?/, '')
       .split('&')

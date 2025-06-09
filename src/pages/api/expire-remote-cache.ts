@@ -1,3 +1,3 @@
-import { handler } from 'lib/remote-cache/expire-remote-cache-handler';
+import { remoteCacheHandler } from 'lib/remote-cache/expire-remote-cache-handler';
 
-export default handler;
+export default remoteCacheHandler;

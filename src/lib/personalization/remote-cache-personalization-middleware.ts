@@ -87,7 +87,6 @@ export class RemoteCachePersonalizationMiddleware extends PersonalizeMiddleware 
     const startTimestamp = Date.now();
     const timeout = this.config.cdpConfig.timeout;
 
-    // Response will be provided if other middleware is run before us (e.g. redirects)
     let response = res || NextResponse.next();
 
     debug.personalize('personalize middleware start: %o', {
@@ -185,10 +184,8 @@ export class RemoteCachePersonalizationMiddleware extends PersonalizeMiddleware 
       return response;
     }
 
-    // Path can be rewritten by previously executed middleware
     const basePath = res?.headers.get(REWRITE_HEADER_NAME) || pathname;
 
-    // Rewrite to persononalized path
     const rewritePath = getPersonalizedRewrite(basePath, identifiedVariantIds);
     response = this.rewrite(rewritePath, req, response);
 
