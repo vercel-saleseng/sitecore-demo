@@ -3,14 +3,14 @@ import { RedirectsMiddleware } from '@sitecore-jss/sitecore-jss-nextjs/middlewar
 import { MiddlewarePlugin } from '..';
 import { siteResolver } from 'lib/site-resolver';
 import clientFactory from 'lib/graphql-client-factory';
-import { RemoteCacheRedirectsMiddleware } from 'lib/redirects/remote-cache-redirects-middleware';
+import { RuntimeCacheRedirectsMiddleware } from 'lib/redirects/runtime-cache-redirects-middleware';
 
 class RedirectsPlugin implements MiddlewarePlugin {
   private redirectsMiddleware: RedirectsMiddleware;
   order = 0;
 
   constructor() {
-    this.redirectsMiddleware = new RemoteCacheRedirectsMiddleware({
+    this.redirectsMiddleware = new RuntimeCacheRedirectsMiddleware({
       // Client factory implementation
       clientFactory,
       // These are all the locales you support in your application.

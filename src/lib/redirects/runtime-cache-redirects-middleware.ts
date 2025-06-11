@@ -30,13 +30,13 @@ const DEFAULT_CACHE_CONFIG = {
   name: "redirect-urls", 
 } as const;
 
-type RemoteCacheRedirectsMiddlewareConfig = RedirectsMiddlewareConfig & {
+type RuntimeCacheRedirectsMiddlewareConfig = RedirectsMiddlewareConfig & {
   cacheConfig?: CacheConfig;
 };
 
 type RedirectResult = RedirectInfo & { matchedQueryString?: string };
 
-export class RemoteCacheRedirectsMiddleware extends RedirectsMiddleware {
+export class RuntimeCacheRedirectsMiddleware extends RedirectsMiddleware {
   private siteRedirectsService: GraphQLRedirectsService;
   private siteLocales: string[];
   private cacheKey: string;
@@ -46,7 +46,7 @@ export class RemoteCacheRedirectsMiddleware extends RedirectsMiddleware {
     name: string;
   };
 
-  constructor(protected config: RemoteCacheRedirectsMiddlewareConfig) {
+  constructor(protected config: RuntimeCacheRedirectsMiddlewareConfig) {
     super(config)
     this.siteRedirectsService = new GraphQLRedirectsService({ ...config, fetch: fetch });
     this.siteLocales = config.locales;
@@ -73,7 +73,7 @@ export class RemoteCacheRedirectsMiddleware extends RedirectsMiddleware {
     let redirects = (await cache.get(this.cacheKey)) as RedirectInfo[] | null;
 
     if (!redirects) {
-      console.info('Redirects not in remote cache. Retrieving redirects from Sitecore');
+      console.info('Redirects not in runtime cache. Retrieving redirects from Sitecore');
       redirects = await this.siteRedirectsService.fetchRedirects(siteName);
       await cache.set("redirects", redirects, this.cacheOptions);
     }

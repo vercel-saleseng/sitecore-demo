@@ -35,18 +35,18 @@ type PersonalizeOptions = {
   };
 };
 
-type RemoteCachePersonalizeMiddlewareConfig = PersonalizeMiddlewareConfig & {
+type RuntimeCachePersonalizeMiddlewareConfig = PersonalizeMiddlewareConfig & {
   cacheConfig?: CacheConfig;
 };
 
-export class RemoteCachePersonalizationMiddleware extends PersonalizeMiddleware {
+export class RuntimeCachePersonalizationMiddleware extends PersonalizeMiddleware {
   private sitePersonalizeService: GraphQLPersonalizeService;
   private cacheOptions: {
     ttl: number;
     tags: string[];
   };
 
-  constructor(protected config: RemoteCachePersonalizeMiddlewareConfig) {
+  constructor(protected config: RuntimeCachePersonalizeMiddlewareConfig) {
     super(config);
 
     this.sitePersonalizeService = new GraphQLPersonalizeService({
@@ -118,7 +118,7 @@ export class RemoteCachePersonalizationMiddleware extends PersonalizeMiddleware 
     let personalizeInfo = (await cache.get(cacheKey)) as PersonalizeInfo | undefined;
 
     if (!personalizeInfo) {
-      console.info('Personalize info not in remote cache. Retrieving information from Sitecore');
+      console.info('Personalize info not in runtime cache. Retrieving information from Sitecore');
       personalizeInfo = await this.sitePersonalizeService.getPersonalizeInfo(
         pathname,
         language,
