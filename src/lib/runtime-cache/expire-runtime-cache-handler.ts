@@ -1,16 +1,16 @@
 import { getCache } from '@vercel/functions';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export async function remoteCacheHandler(req: NextApiRequest, res: NextApiResponse) {
+export async function runtimeCacheHandler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST']);
     return res.status(405).json({ success: false, message: `Method ${req.method} Not Allowed` });
   }
 
-  const headerSecret = req.headers['x-remote-cache-secret'] as string;
+  const headerSecret = req.headers['x-runtime-cache-secret'] as string;
   const tag = req.query.tag as string;
 
-  if (!headerSecret || headerSecret !== process.env.EXPIRE_REMOTE_CACHE_SECRET) {
+  if (!headerSecret || headerSecret !== process.env.EXPIRE_RUNTIME_CACHE_SECRET) {
     return res.status(401).json({ success: false, message: 'Unauthorized: Invalid secret header' });
   }
 

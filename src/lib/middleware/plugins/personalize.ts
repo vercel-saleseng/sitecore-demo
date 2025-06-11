@@ -3,7 +3,7 @@ import { MiddlewarePlugin } from '..';
 import clientFactory from 'lib/graphql-client-factory';
 import config from 'temp/config';
 import { siteResolver } from 'lib/site-resolver';
-import { RemoteCachePersonalizationMiddleware } from 'lib/personalization/remote-cache-personalization-middleware';
+import { RuntimeCachePersonalizationMiddleware } from 'lib/personalization/runtime-cache-personalization-middleware';
 
 /**
  * This is the personalize middleware plugin for Next.js.
@@ -15,13 +15,13 @@ import { RemoteCachePersonalizationMiddleware } from 'lib/personalization/remote
  *  3. Rewrite the response to the specific page / component variant(s).
  */
 class PersonalizePlugin implements MiddlewarePlugin {
-  private personalizeMiddleware: RemoteCachePersonalizationMiddleware;
+  private personalizeMiddleware: RuntimeCachePersonalizationMiddleware;
 
   // Using 1 to leave room for things like redirects to occur first
   order = 1;
 
   constructor() {
-    this.personalizeMiddleware = new RemoteCachePersonalizationMiddleware({
+    this.personalizeMiddleware = new RuntimeCachePersonalizationMiddleware({
       // Configuration for your Sitecore Experience Edge endpoint
       edgeConfig: {
         clientFactory,
