@@ -37,6 +37,7 @@ const SitecorePage = ({
         componentFactory={componentBuilder.getComponentFactory({ isEditing })}
         layoutData={layoutData}
       >
+        <h1>This is a code change</h1>
         <Layout layoutData={layoutData} headLinks={headLinks} />
       </SitecoreContext>
     </ComponentPropsContext>
