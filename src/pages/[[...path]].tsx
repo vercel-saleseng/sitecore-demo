@@ -33,6 +33,7 @@ const SitecorePage = ({
 
   return (
     <ComponentPropsContext value={componentProps}>
+      <h1>This is a code change</h1>
       <SitecoreContext
         componentFactory={componentBuilder.getComponentFactory({ isEditing })}
         layoutData={layoutData}
